@@ -39,7 +39,7 @@ function buildHourglass(size){
         for (let col = 0; col < size; col++) {
             if(row == 0 || row == size-1 || col == 0 || col == size-1){
                 hourglass[row][col] = '#';
-            } else if(row < size/2 && (row < size - col && row <= col)){
+            } else if(row < size/2 && (row <= col && row < size - col)){
                 hourglass[row][col] = '#';
             } else if(row >= size/2 && (row == col || row == size - col - 1)){
                 hourglass[row][col] = '#';
@@ -51,35 +51,34 @@ function buildHourglass(size){
     }
     return hourglass;
 }
+function hourglassFinal(hourglass){
+    const size = hourglass.length
+
+    for (let row = 1; row < size; row++) {
+        for (let col = 0; col < size; col++) {
+            if(row < size/2 && (row < col && row < size - col - 1)){
+                hourglass[row][col] = ' ';
+            } else if(row >= size/2 && (row > col && row >= size - col)){
+                hourglass[row][col] = '#';
+            }
+        }
+    }
+    return hourglass;
+}
 function hourglassTimelapse(hourglass, time){
     if(time == 0){
         return toString(hourglass);
+    } else{
+        return toString(hourglassFinal(hourglass));
     }
 }
 
 rl.question("What is the size of your hourglass? ", function(size){
     let hourglass = buildHourglass(size)
-    console.log(hourglassTimelapse(hourglass, 0));
+    
+    for (let i = 0; i < 2; i++) {
+        console.log(hourglassTimelapse(hourglass, i));
+    }
 
     rl.close();
 })
-// ####################
-// ####################
-// # ##################
-// #  ############### #
-// #   #############  #
-// #    ###########   #
-// #     #########    #
-// #      #######     #
-// #       #####      #
-// #        ###       #
-// #         #        #
-// #        # #       #
-// #       #   #      #
-// #      #     #     #
-// #     #       #    #
-// #    #         #   #
-// #   #           #  #
-// #  #             # #
-// # #               ##
-// ####################
