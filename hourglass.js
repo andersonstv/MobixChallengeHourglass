@@ -77,8 +77,11 @@ function hourglassState(hourglass, time){
 // Prints the timelapse of the hourglass to the console
 function hourglassTimelapse(hourglass){
     const size = hourglass.length;
-    for (let i = 0; i < (size/2) -1; i++) {
-        console.log(toString(hourglassState(hourglass, i)));
+    for (let time = 0; time < (size/2) -1; time++) {
+        setTimeout(() => {
+            console.clear();
+            console.log(toString(hourglassState(hourglass, time)));
+        }, 1000*time)
     }
 
 }
