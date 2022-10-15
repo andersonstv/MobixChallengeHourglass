@@ -39,9 +39,9 @@ function buildHourglass(size){
         for (let col = 0; col < size; col++) {
             if(row == 0 || row == size-1 || col == 0 || col == size-1){
                 hourglass[row][col] = '#';
-            } else if(row < size/2 && (row < size - col && row <= col) && (row == col || row)){
+            } else if(row < size/2 && (row < size - col && row <= col)){
                 hourglass[row][col] = '#';
-            } else if(row >= size/2 && (row == col || row == size -col -1)){
+            } else if(row >= size/2 && (row == col || row == size - col - 1)){
                 hourglass[row][col] = '#';
             }
             else{
