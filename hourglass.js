@@ -20,7 +20,7 @@ function setupMatrix(n){
     }
     return matrix;
 }
-// Converts the Hourglass array to string
+// Converts the hourglass array to string
 function toString(hourglass){
     let hourglassStr = ""
     for (let i = 0; i < hourglass.length; i++) {
@@ -31,7 +31,7 @@ function toString(hourglass){
     }
     return hourglassStr;
 }
-
+// Builds the hourglass at start
 function buildHourglass(size){
     let hourglass = setupMatrix(size);
 
@@ -51,34 +51,42 @@ function buildHourglass(size){
     }
     return hourglass;
 }
-function hourglassFinal(hourglass){
+// Calculates the state of the hourglass at a given time
+function hourglassState(hourglass, time){
     const size = hourglass.length
 
-    for (let row = 1; row < size; row++) {
+    // removes sand on top half
+    for (let row = 1; row < time+1; row++) {
         for (let col = 0; col < size; col++) {
             if(row < size/2 && (row < col && row < size - col - 1)){
                 hourglass[row][col] = ' ';
-            } else if(row >= size/2 && (row > col && row >= size - col)){
+            }
+        }
+    }
+
+    // transfers sand to bottom half
+    for (let row = size-2; row >= size-time-1; row--) {
+        for (let col = 0; col < size; col++) {
+            if(row >= size/2 && (row > col && row >= size - col)){
                 hourglass[row][col] = '#';
             }
         }
     }
     return hourglass;
 }
-function hourglassTimelapse(hourglass, time){
-    if(time == 0){
-        return toString(hourglass);
-    } else{
-        return toString(hourglassFinal(hourglass));
+// Prints the timelapse of the hourglass to the console
+function hourglassTimelapse(hourglass){
+    const size = hourglass.length;
+    for (let i = 0; i < (size/2) -1; i++) {
+        console.log(toString(hourglassState(hourglass, i)));
     }
+
 }
 
 rl.question("What is the size of your hourglass? ", function(size){
     let hourglass = buildHourglass(size)
     
-    for (let i = 0; i < 2; i++) {
-        console.log(hourglassTimelapse(hourglass, i));
-    }
+    hourglassTimelapse(hourglass);
 
     rl.close();
 })
